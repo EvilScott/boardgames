@@ -1,5 +1,6 @@
 <script>
   import Designer from '~/components/Designer.svelte';
+  import Tag from '~/components/Tag.svelte';
   export let game;
 </script>
 
@@ -13,6 +14,12 @@
     design:
     {#each game.designers as name}
       <Designer name={name} />
+    {/each}
+  </div>
+  <div>
+    tags:
+    {#each game.tags as name}
+      <Tag name={name} />
     {/each}
   </div>
 </div>

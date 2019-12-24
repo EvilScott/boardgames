@@ -7,5 +7,7 @@
     <h1>boardgames</h1>
     {#each $filteredList as game}
         <BoardGame game={game} />
+    {:else}
+        No games found
     {/each}
 </div>

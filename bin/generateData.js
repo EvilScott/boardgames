@@ -16,15 +16,12 @@ const COLUMN_MAP = {
   boardgamedesigner: 'designers',
   boardgameartist: 'artists',
   boardgamepublisher: 'publishers',
-  boardgamecategory: 'categories',
-  boardgamefamily: 'families',
-  boardgamemechanic: 'mechanics',
+  boardgamecategory: 't1',
+  boardgamefamily: 't2',
+  boardgamemechanic: 't3',
   bgg_url: 'url',
 };
-const ARRAY_COLUMNS = [
-  'designers', 'artists', 'publishers',
-  'categories', 'families', 'mechanics',
-];
+const ARRAY_COLUMNS = [ 'designers', 'artists', 'publishers', 't1', 't2', 't3' ];
 const INT_COLUMNS = [
   'id', 'year', 'minPlayers', 'maxPlayers', 'minAge',
   'playTime', 'minPlayTime', 'maxPlayTime'
@@ -60,10 +57,19 @@ const formatIntData = row => {
   return row;
 };
 
+const combineTags = row => {
+  row.tags = [ ...row.t1, ...row.t2, ...row.t3 ];
+  delete row.t1;
+  delete row.t2;
+  delete row.t3;
+  return row;
+};
+
 hl(CSV_STREAM)
   .map(mapFields)
   .map(formatArrayData)
   .map(formatIntData)
+  .map(combineTags)
   .map(JSON.stringify)
   .intersperse(',')
   .append(']')

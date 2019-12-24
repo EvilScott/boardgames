@@ -1,8 +1,10 @@
 import hl from 'highland';
-// import { COLUMNS } from '~/utils/constants';
+import { overlap } from '~/utils/helper';
 import { derived, readable, writable } from 'svelte/store';
 
-export const filters = writable({});
+export const filters = writable({
+  designers: [], artists: [], publishers: [], tags: []
+});
 
 export const gameList = readable([], async (set) => {
   const res = await fetch('/build/boardgames.json');
@@ -12,6 +14,16 @@ export const gameList = readable([], async (set) => {
 export const filteredList = derived(
   [ filters, gameList ],
   ([ $filters, $gameList ], set) => {
-    hl($gameList).take(25).toArray(set);
+    const filterField = (field) => (game) =>
+      $filters[field].length === 0 || overlap(game[field], $filters[field]) > 0;
+
+    hl($gameList)
+      .filter(filterField('designers'))
+      .filter(filterField('artists'))
+      .filter(filterField('publishers'))
+      .filter(filterField('tags'))
+      .take(25)
+      .sortBy((a, b) => b.year - a.year)
+      .toArray(set);
   }
 );
