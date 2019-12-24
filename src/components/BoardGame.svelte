@@ -2,6 +2,8 @@
   export let game;
 </script>
 
-<div class="board-game">
-  <h2>{game.name}</h2>
+<div class="board-game row">
+  <a href={game.url} target="_blank">
+    {game.name} ({game.year})
+  </a>
 </div>

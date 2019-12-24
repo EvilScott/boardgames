@@ -3,28 +3,48 @@ const hl = require('highland'),
   path = require('path'),
   fs = require('fs');
 
-const COLUMNS = [
-  'game_id', 'name', 'boardgamedesigner', 'boardgameartist', 'yearpublished',
-  'minplayers', 'maxplayers', 'minage', 'playingtime', 'minplaytime',
-  'maxplaytime', 'boardgamepublisher', 'boardgamecategory', 'boardgamefamily',
-  'boardgamemechanic', 'bgg_url'
-];
+const COLUMN_MAP = {
+  game_id: 'id',
+  name: 'name',
+  yearpublished: 'year',
+  minplayers: 'minPlayers',
+  maxplayers: 'maxPlayers',
+  minage: 'minAge',
+  playingtime: 'playTime',
+  minplaytime: 'minPlayTime',
+  maxplaytime: 'maxPlayTime',
+  boardgamedesigner: 'designers',
+  boardgameartist: 'artists',
+  boardgamepublisher: 'publishers',
+  boardgamecategory: 'categories',
+  boardgamefamily: 'families',
+  boardgamemechanic: 'mechanics',
+  bgg_url: 'url',
+};
 const ARRAY_COLUMNS = [
-  'boardgamedesigner', 'boardgameartist', 'boardgamepublisher',
-  'boardgamecategory', 'boardgamefamily', 'boardgamemechanic'
+  'designers', 'artists', 'publishers',
+  'categories', 'families', 'mechanics',
 ];
 const INT_COLUMNS = [
-  'game_id', 'yearpublished', 'minplayers', 'maxplayers', 'minage',
-  'playingtime', 'minplaytime', 'maxplaytime'
+  'id', 'year', 'minPlayers', 'maxPlayers', 'minAge',
+  'playTime', 'minPlayTime', 'maxPlayTime'
 ];
 
 const DATA_PATH = path.resolve(__dirname, '../data/2019-12-21_game_reference.csv');
-const OUTPUT_PATH = path.resolve(__dirname, '../src/boardgames.json');
+const OUTPUT_PATH = path.resolve(__dirname, '../public/build/boardgames.json');
 const OUTPUT_STREAM = fs.createWriteStream(OUTPUT_PATH);
 const CSV_STREAM = fs.createReadStream(DATA_PATH, { encoding: 'utf8' })
   .pipe(parse({ columns: true }));
 
 OUTPUT_STREAM.write('[');
+
+const mapFields = row => {
+  let newRow = {};
+  for (const [key, val] of Object.entries(COLUMN_MAP)) {
+    newRow[val] = row[key];
+  }
+  return newRow;
+};
 
 const formatArrayData = row => {
   for (const c of ARRAY_COLUMNS) {
@@ -41,7 +61,7 @@ const formatIntData = row => {
 };
 
 hl(CSV_STREAM)
-  .pick(COLUMNS)
+  .map(mapFields)
   .map(formatArrayData)
   .map(formatIntData)
   .map(JSON.stringify)

@@ -1,9 +1,11 @@
 <script>
-    import BoardGame from '~/components/BoardGame.svelte'
-    export let games;
+    import BoardGame from '~/components/BoardGame.svelte';
+    import { filteredList } from '~/stores.js';
 </script>
 
 <div class="container">
     <h1>boardgames</h1>
-    <BoardGame game={games[0]} />
+    {#each $filteredList as game}
+        <BoardGame game={game} />
+    {/each}
 </div>
