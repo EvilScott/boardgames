@@ -19,9 +19,12 @@ const INT_COLUMNS = [
 ];
 
 const DATA_PATH = path.resolve(__dirname, '../data/2019-12-21_game_reference.csv');
-const OUTPUT_PATH = path.resolve(__dirname, '../public/build/boardgames.json');
+const OUTPUT_PATH = path.resolve(__dirname, '../src/boardgames.json');
+const OUTPUT_STREAM = fs.createWriteStream(OUTPUT_PATH);
 const CSV_STREAM = fs.createReadStream(DATA_PATH, { encoding: 'utf8' })
   .pipe(parse({ columns: true }));
+
+OUTPUT_STREAM.write('[');
 
 const formatArrayData = row => {
   for (const c of ARRAY_COLUMNS) {
@@ -42,4 +45,6 @@ hl(CSV_STREAM)
   .map(formatArrayData)
   .map(formatIntData)
   .map(JSON.stringify)
-  .pipe(fs.createWriteStream(OUTPUT_PATH));
+  .intersperse(',')
+  .append(']')
+  .pipe(OUTPUT_STREAM);

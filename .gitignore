@@ -1,4 +1,5 @@
 /node_modules/
 /public/build/
 /data/*.csv
+/src/boardgames.json
 .DS_Store

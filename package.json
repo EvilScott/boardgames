@@ -9,6 +9,7 @@
   },
   "devDependencies": {
     "@rollup/plugin-alias": "^3.0.0",
+    "@rollup/plugin-json": "^4.0.1",
     "@rollup/plugin-node-resolve": "^6.0.0",
     "csv-parse": "^4.8.2",
     "highland": "^2.13.5",
