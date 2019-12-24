@@ -1,7 +1,9 @@
 import svelte from 'rollup-plugin-svelte';
 import resolve from '@rollup/plugin-node-resolve';
 import alias from '@rollup/plugin-alias';
+import builtins from 'rollup-plugin-node-builtins';
 import commonjs from 'rollup-plugin-commonjs';
+import global from 'rollup-plugin-node-globals';
 import livereload from 'rollup-plugin-livereload';
 import path from 'path';
 import { terser } from 'rollup-plugin-terser';
@@ -34,9 +36,12 @@ export default {
     // https://github.com/rollup/rollup-plugin-commonjs
     resolve({
       browser: true,
-      dedupe: importee => importee === 'svelte' || importee.startsWith('svelte/')
+      dedupe: importee => importee === 'svelte' || importee.startsWith('svelte/'),
+      preferBuiltins: true
     }),
+    builtins(),
     commonjs(),
+    global(),
     alias({
       entries: [
         { find: '~', replacement: path.resolve(__dirname, 'src/') },
