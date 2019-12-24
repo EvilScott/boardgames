@@ -1,6 +1,6 @@
 <script>
     import BoardGame from '~/components/BoardGame.svelte';
-    import { filteredList } from '~/stores.js';
+    import { filteredList } from '~/utils/stores.js';
 </script>
 
 <div class="container">
