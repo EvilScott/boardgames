@@ -58,7 +58,7 @@ const formatIntData = row => {
 };
 
 const combineTags = row => {
-  row.tags = [ ...row.t1, ...row.t2, ...row.t3 ];
+  row.tags = [ ...row.t1, ...row.t2, ...row.t3 ].filter(t => t.length);
   delete row.t1;
   delete row.t2;
   delete row.t3;

@@ -1,2 +1,2 @@
-export const overlap = (a, b) =>
-  ((a || []).filter(v => (b || []).includes(v)) || []).length;
+export const overlap = (g, f) =>
+  ((g || []).filter(v => (f || []).includes(v)) || []).length >= f.length;

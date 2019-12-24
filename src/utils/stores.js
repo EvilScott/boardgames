@@ -15,7 +15,7 @@ export const filteredList = derived(
   [ filters, gameList ],
   ([ $filters, $gameList ], set) => {
     const filterField = (field) => (game) =>
-      $filters[field].length === 0 || overlap(game[field], $filters[field]) > 0;
+      $filters[field].length === 0 || overlap(game[field], $filters[field]);
 
     hl($gameList)
       .filter(filterField('designers'))

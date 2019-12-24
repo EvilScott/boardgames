@@ -15,8 +15,6 @@
     {#each game.designers as name}
       <Designer name={name} />
     {/each}
-  </div>
-  <div>
     tags:
     {#each game.tags as name}
       <Tag name={name} />
