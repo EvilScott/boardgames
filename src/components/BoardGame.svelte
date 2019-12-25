@@ -5,8 +5,8 @@
 </script>
 
 <div class="board-game row">
-  <div>
-    <a class="name" href={game.url} target="_blank">
+  <div class="name" >
+    <a href={game.url} target="_blank">
       {game.name} ({game.year})
     </a>
   </div>
@@ -24,10 +24,13 @@
 
 <style>
   .board-game {
-    margin-bottom: 1.6rem;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
   }
 
-  .board-game a.name {
+  .board-game div.name {
     font-size: 1.8rem;
+    margin-bottom: 0.5rem;
   }
 </style>

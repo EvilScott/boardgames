@@ -8,18 +8,20 @@
 <div class="container">
     <h1>boardgames</h1>
     <div class="filters">
-    {#each $filters.designers as name}
-        <Designer name={name} />
-    {/each}
-    {#each $filters.tags as name}
-        <Tag name={name} />
-    {/each}
+        {#each $filters.designers as name}
+            <Designer name={name} />
+        {/each}
+        {#each $filters.tags as name}
+            <Tag name={name} />
+        {/each}
     </div>
-    {#each $filteredList as game}
-        <BoardGame game={game} />
-    {:else}
-        No games found
-    {/each}
+    <div class="games">
+        {#each $filteredList as game}
+            <BoardGame game={game} />
+        {:else}
+            No games found
+        {/each}
+    </div>
 </div>
 
 <style>
